@@ -1,0 +1,13 @@
+{
+  "name": "accordion-tree",
+  "description": "Multi-level accordion view (aka tree view)",
+  "dependencies": {},
+  "development": {},
+  "scripts": [
+    "index.js",
+    "template.js"
+  ],
+  "styles": [
+    "accordion-tree.css"
+  ]
+}
