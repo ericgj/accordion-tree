@@ -33,34 +33,38 @@ AccordionTree.prototype = new Emitter;
 
 AccordionTree.prototype.addLeaf = function(content,slug){
   var leaf = this.root.addLeaf(content,slug);
-  this.nodes[leaf.slug] = leaf;
+  this.nodes[leaf.path] = leaf;
   return leaf;
 }
 
 AccordionTree.prototype.addBranch = function(content,slug){
   var branch = this.root.addBranch(content,slug);
-  this.nodes[branch.slug] = branch;
+  this.nodes[branch.path] = branch;
   return branch;
 }
 
-AccordionTree.prototype.deselectAll = function(){
-  this.root.deselectAll();
+AccordionTree.prototype.selectAll = function(recurse){
+  this.root.selectAll(recurse);
 }
 
-AccordionTree.prototype.deselect = function(slug){
-  var node = this.nodes[slug];
+AccordionTree.prototype.deselectAll = function(recurse){
+  this.root.deselectAll(recurse);
+}
+
+AccordionTree.prototype.deselect = function(path){
+  var node = this.nodes[path];
   node && node.deselect();
 }
 
 AccordionTree.prototype.onClickLeaf = function(e){
-  var slug = e.target.getAttribute('data-slug'),
-      leaf = this.nodes[slug];
+  var path = e.target.getAttribute('data-path'),
+      leaf = this.nodes[path];
   if (leaf) this.emit('selectLeaf', leaf);
 }
 
 AccordionTree.prototype.onClickBranch = function(e){
-  var slug = e.target.getAttribute('data-slug'),
-      branch = this.nodes[slug];
+  var path = e.target.getAttribute('data-path'),
+      branch = this.nodes[path];
   branch.select();
   if (branch) this.emit('selectBranch', branch);
 }
@@ -72,8 +76,8 @@ function Node(container,root,content,slug){
   this.container = container;
   this.root = root;
   this.content = content;
-  this.baseSlug = slugify(slug || content);
-  this.slug = this.fullPath();
+  this.slug = slugify(slug || content);
+  this.path = this.fullPath();
   
   this.el = null;
   this.selected = false;
@@ -82,8 +86,8 @@ function Node(container,root,content,slug){
 }
 
 Node.prototype.fullPath = function(){
-  if (!this.root) return this.baseSlug;
-  return [this.root.fullPath(), this.baseSlug].join('::');
+  if (!this.root) return this.slug;
+  return [this.root.fullPath(), this.slug].join('/');
 }
   
 Node.prototype.addLeaf = function(content,slug){
@@ -97,6 +101,8 @@ Node.prototype.addBranch = function(content,slug){
 Node.prototype.addNode = function(tmpl,content,slug){
   var node = new Node(this.container, this, content, slug);
   node.el = domify(tmpl(node))[0];
+  var parentEl = this.el.querySelector('.children');
+  if (parentEl) parentEl.appendChild(node.el);
   this.children.push(node);
   return node;
 }
@@ -111,14 +117,24 @@ Node.prototype.select = function(){
   }
 }
 
+Node.prototype.selectAll = function(recurse){
+  for (var node in this.children) {
+    if (recurse) node.selectAll(recurse);
+    node.select();
+  }
+}
+
 Node.prototype.deselect = function(){
   classes(this.el).remove('selected');
   this.selected = false;
 }
 
 
-Node.prototype.deselectAll = function(){
-  for (var node in this.children) node.deselect();
+Node.prototype.deselectAll = function(recurse){
+  for (var node in this.children) {
+    if (recurse) node.deselectAll(recurse);
+    node.deselect();
+  }
 }
 
 // private
