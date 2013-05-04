@@ -16,5 +16,5 @@ module.exports = function anonymous(obj) {
     return '';
   };
 
-  return "<li data-slug='" + escape(obj.slug) + "' class='leaf'>" + obj.content + "</li>\n\n"
+  return "<li data-path='" + escape(obj.path) + "' class='leaf'>" + obj.content + "</li>\n\n"
 }
