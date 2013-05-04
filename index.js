@@ -1,6 +1,8 @@
 var delegates = require('delegates')
   , domify    = require('domify')
   , classes   = require('classes')
+  , leafTmpl  = require('./leaf.js')
+  , branchTmpl= require('./branch.js')
   , noop      = function(){}
 
 module.exports = AccordionTree;
@@ -71,7 +73,9 @@ function Node(container,root,content,slug){
   this.root = root;
   this.content = content;
   this.baseSlug = slugify(slug || content);
-  this.slug = slugify(this.fullPath());
+  this.slug = this.fullPath();
+  
+  this.el = null;
   this.selected = false;
   this.children = [];
   return this;
@@ -79,17 +83,23 @@ function Node(container,root,content,slug){
 
 Node.prototype.fullPath = function(){
   if (!this.root) return this.baseSlug;
-  return [this.root.fullPath(), this.baseSlug].join('/');
+  return [this.root.fullPath(), this.baseSlug].join('::');
 }
   
-// TODO
 Node.prototype.addLeaf = function(content,slug){
+  return this.addNode(leafTmpl,content,slug);
 }
 
-// TODO
 Node.prototype.addBranch = function(content,slug){
+  return this.addNode(branchTmpl,content,slug);
 }
 
+Node.prototype.addNode = function(tmpl,content,slug){
+  var node = new Node(this.container, this, content, slug);
+  node.el = domify(tmpl(node))[0];
+  this.children.push(node);
+  return node;
+}
 
 Node.prototype.select = function(){
   if (this.selected){
