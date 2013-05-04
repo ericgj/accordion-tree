@@ -21,8 +21,8 @@ function AccordionTree(el,options){
   this.nodes = [];
 
   options = merge(defaults, options || {})
-  this.selectBehavior   = (options.multiselect ? noop : this.deselectAll);
-  this.reselectBehavior = (options.deselect ? this.deselect : noop);
+  this.selectBehavior   = (options.multiselect ? null : 'deselectAll');
+  this.reselectBehavior = (options.deselect ? 'deselect' : null);
 
   this.events = delegates(this.el, this);
   this.events.bind('click .leaf', 'onClickLeaf');
@@ -106,9 +106,11 @@ Node.prototype.addNode = function(tmpl,content,slug){
 
 Node.prototype.select = function(){
   if (this.selected){
-    this.container.reselectBehavior(this);
+    var meth = this.container.reselectBehavior;
+    if (meth) this[meth]();
   } else {
-    this.container.selectBehavior(this);
+    var meth = this.container.selectBehavior;
+    if (meth) this[meth]();
     classes(this.el).add('selected');
     this.selected = true;
   }
