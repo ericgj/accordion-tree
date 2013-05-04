@@ -1,11 +1,19 @@
 {
   "name": "accordion-tree",
   "description": "Multi-level accordion view (aka tree view)",
-  "dependencies": {},
-  "development": {},
+  "dependencies": {
+    "component/delegates": "*",
+    "component/emitter": "*",
+    "component/domify": "*",
+    "component/classes": "*"
+  },
+  "development": {
+    "visionmedia/minstache": "*"  
+  },
   "scripts": [
     "index.js",
-    "template.js"
+    "leaf.js",
+    "branch.js"
   ],
   "styles": [
     "accordion-tree.css"

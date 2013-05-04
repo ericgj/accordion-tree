@@ -1,0 +1,89 @@
+<!DOCTYPE 5>
+<html>
+  <head>
+    <title>Accordion Tree</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="../build/build.css" />
+    <style>
+      
+      body { 
+        padding: 60px; 
+        font: 300 14px "Helvetica Neue", Helvetica, Arial;
+        min-height: 1000px;
+      }
+
+      body > h2 {
+        border-top: 1px solid gray;
+        margin-top: 30px;
+      }
+
+      .accordion-tree {
+        width: 600px;
+      }
+
+      .accordion-tree .branch {
+        background-color: lightgray;
+        border: 1px solid gray;
+        padding: 5px 8px;
+        margin: -1px;
+      }
+
+      .accordion-tree ul {
+        padding: 0;
+        margin: 0;
+      }
+
+      .accordion-tree li {
+        list-style-type: none;
+      }
+
+    </style>
+  </head>
+  <body>
+    <h1>Accordion Tree</h1>
+    
+    <h2>Default behavior: deselectable, and single select</h2>
+    <div id="tree1">
+    </div>
+
+<!--
+    <h2>Deselectable, and multi select</h2>
+    <div id="tree2">
+    </div>
+    
+    <h2>Not deselectable, and single select</h2>
+    <div id="tree3">
+    </div>
+-->
+
+    <script src="../build/build.js"></script>
+    <script>
+      var Tree = require('accordion-tree');
+      var tree = Tree('#tree1');
+      var cars = tree.addBranch('Cars')
+        , trucks = tree.addBranch('Trucks');
+      
+      cars.addLeaf('Orphan leaf');
+
+      var price = cars.addBranch('By Price') 
+        , feature = cars.addBranch('By Feature')
+      price.addLeaf('5000-10000')
+      price.addLeaf('10000-15000')
+      price.addLeaf('15000-20000')
+      feature.addLeaf('AC')
+      feature.addLeaf('Vibrating seats')
+      feature.addLeaf('Sunroof');
+
+      var color = trucks.addBranch('Color')
+      color.addLeaf('Black')
+      color.addLeaf('White')
+      color.addLeaf('Red')
+      color.addLeaf('Purple');
+      var tans = color.addBranch('Tans');
+      tans.addLeaf('Beige');
+      tans.addLeaf('Cream');
+
+      trucks.addLeaf('Orphan leaf');
+    </script>
+  </body>
+</html>

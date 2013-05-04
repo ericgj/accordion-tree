@@ -1,0 +1,81 @@
+
+.accordion-tree .branch {
+  display: block;
+  cursor: pointer;
+}
+
+/* default node display = none */
+
+.accordion-tree .leaf {
+  display: none;
+}
+
+.accordion-tree .branch {
+  display: none;
+}
+
+
+/* top-level node display = block */
+
+.accordion-tree > .children > .branch {
+  display: block;
+}
+
+.accordion-tree > .children > .leaf {
+  display: block;
+}
+
+
+/* non-top-level node default display = none */
+
+.accordion-tree > .children > .branch .branch {
+  display: none;
+}
+
+.accordion-tree > .children > .branch .leaf {
+  display: none;
+}
+
+
+/* display selected node and its children anywhere in the tree */
+
+.accordion-tree .selected {
+  display: block;
+}
+
+.accordion-tree .selected > .children > .branch {
+  display: block;
+}
+
+.accordion-tree .selected > .children > .leaf {
+  display: block;
+}
+
+
+.accordion-tree .caret {
+  display: inline-block;
+  vertical-align: top;
+  width: 0;
+  height: 0;
+  content: "";
+  margin: 5px;
+}
+
+.accordion-tree .caret {
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid black;
+  border-right: none; 
+}
+
+
+/* down-arrow when node selected */
+
+.accordion-tree .selected > * > .caret {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid black;
+  border-bottom: none;
+  margin-left: 0px;
+}
+

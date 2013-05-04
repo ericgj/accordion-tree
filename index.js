@@ -1,4 +1,5 @@
 var delegates = require('delegates')
+  , Emitter   = require('emitter')
   , domify    = require('domify')
   , classes   = require('classes')
   , leafTmpl  = require('./leaf.js')
@@ -14,6 +15,7 @@ defaults = {
 
 function AccordionTree(el,options){
   if (!(this instanceof AccordionTree)) return new AccordionTree(el,options);
+  if (typeof el=='string') el = document.querySelector(el);
   this.el = el;
   this.root = new Node(this);
   this.nodes = [];
@@ -23,8 +25,11 @@ function AccordionTree(el,options){
   this.reselectBehavior = (options.deselect ? this.deselect : noop);
 
   this.events = delegates(this.el, this);
-  this.events.on('click .leaf', this.onClickLeaf.bind(this));
-  this.events.on('click .branch', this.onClickBranch.bind(this));
+  this.events.bind('click .leaf', 'onClickLeaf');
+  this.events.bind('click .branch', 'onClickBranch');
+
+  classes(this.el).add('accordion-tree');
+  this.el.appendChild(domify('<div class="children"></div>')[0]);
 
   return this;
 }
@@ -32,27 +37,18 @@ function AccordionTree(el,options){
 AccordionTree.prototype = new Emitter;
 
 AccordionTree.prototype.addLeaf = function(content,slug){
-  var leaf = this.root.addLeaf(content,slug);
-  this.nodes[leaf.path] = leaf;
-  return leaf;
+  return this.root.addLeaf(content,slug);
 }
 
 AccordionTree.prototype.addBranch = function(content,slug){
-  var branch = this.root.addBranch(content,slug);
-  this.nodes[branch.path] = branch;
-  return branch;
+  return this.root.addBranch(content,slug);
 }
 
-AccordionTree.prototype.selectAll = function(recurse){
-  this.root.selectAll(recurse);
+AccordionTree.prototype.deselectAll = function(){
+  this.root.deselectAll();
 }
 
-AccordionTree.prototype.deselectAll = function(recurse){
-  this.root.deselectAll(recurse);
-}
-
-AccordionTree.prototype.deselect = function(path){
-  var node = this.nodes[path];
+AccordionTree.prototype.deselect = function(node){
   node && node.deselect();
 }
 
@@ -79,7 +75,7 @@ function Node(container,root,content,slug){
   this.slug = slugify(slug || content);
   this.path = this.fullPath();
   
-  this.el = null;
+  this.el = (root ? root.el : container.el);
   this.selected = false;
   this.children = [];
   return this;
@@ -101,26 +97,20 @@ Node.prototype.addBranch = function(content,slug){
 Node.prototype.addNode = function(tmpl,content,slug){
   var node = new Node(this.container, this, content, slug);
   node.el = domify(tmpl(node))[0];
+  this.container.nodes[node.path] = node;
+  this.children.push(node);
   var parentEl = this.el.querySelector('.children');
   if (parentEl) parentEl.appendChild(node.el);
-  this.children.push(node);
   return node;
 }
 
 Node.prototype.select = function(){
   if (this.selected){
-    this.container.reselectBehavior();
+    this.container.reselectBehavior(this);
   } else {
-    this.container.selectBehavior();
+    this.container.selectBehavior(this);
     classes(this.el).add('selected');
     this.selected = true;
-  }
-}
-
-Node.prototype.selectAll = function(recurse){
-  for (var node in this.children) {
-    if (recurse) node.selectAll(recurse);
-    node.select();
   }
 }
 
@@ -129,12 +119,16 @@ Node.prototype.deselect = function(){
   this.selected = false;
 }
 
-
-Node.prototype.deselectAll = function(recurse){
-  for (var node in this.children) {
-    if (recurse) node.deselectAll(recurse);
-    node.deselect();
+Node.prototype.deselectAll = function(){
+  var nodes = this.siblingNodes();
+  for (i=0;i<nodes.length;++i){
+    nodes[i].deselect();
   }
+}
+
+Node.prototype.siblingNodes = function(){
+  if (!this.root) return [];
+  return this.root.children;
 }
 
 // private
