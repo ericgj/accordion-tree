@@ -59,6 +59,7 @@ AccordionTree.prototype.onClickLeaf = function(e){
 AccordionTree.prototype.onClickBranch = function(e){
   var slug = e.target.getAttribute('data-slug'),
       branch = this.nodes[slug];
+  branch.select();
   if (branch) this.emit('selectBranch', branch);
 }
 
