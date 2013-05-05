@@ -78,6 +78,7 @@
       <li class="branch" data-path="/a-branch">
         <h3>
           <span class="caret"></span>
+          <span class="icon"></span>
           A branch
         </h3>
         <ul class="children">
@@ -92,6 +93,7 @@
       <li class="branch" data-path="/another-branch">
         <h3>
           <span class="caret"></span>
+          <span class="icon"></span>
           Another branch
         </h3>
         <ul class="children">
@@ -103,6 +105,25 @@
 
   Note that the top-level DOM element will have the "accordion-tree" class
   added on initialization.
+
+  Note that the `<span class="icon">` you can use to style your own expand/
+  collapse arrows, instead of the default in `<span class="caret">`. You
+  should have something like this:
+
+  ```css
+  .accordion-tree .caret { 
+    display: none; 
+  }
+
+  .accordion-tree .icon {
+    display: inline-block;
+    /* background image or content for right-arrow */
+  }
+
+  .accordion-tree .expanded > * > .icon {
+    /* background image or content for down-arrow */
+  }
+  ```
 
 ## Help
 

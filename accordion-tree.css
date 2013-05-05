@@ -82,3 +82,12 @@
   margin-left: 0px;
 }
 
+
+/* icon span if you want custom right- and down- arrows
+   by default, it's hidden
+*/
+
+.accordion-tree .icon {
+  display: none;
+}
+
