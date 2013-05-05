@@ -74,10 +74,14 @@
     <h2>Collapsable, and multi expand per tree level</h2>
     <div id="tree2">
     </div>
-    
+
+    <h2>Clicking on branch text selects but does not expand</h2>
+    <div id="tree3">
+    </div>
+
 <!--  rarely if ever used
     <h2>Not deselectable, and single select (per tree level)</h2>
-    <div id="tree3">
+    <div id="tree4">
     </div>
 -->
 
@@ -139,6 +143,34 @@
         console.log("tree2 select %s: %s", type, node.path);
       });
       
+
+      var tree3 = Tree('#tree3', {branchexpand: false});
+      
+      var cars = tree3.addBranch('Cars')
+        , trucks = tree3.addBranch('Trucks');
+      
+      var price = cars.addBranch('By Price') 
+        , feature = cars.addBranch('By Feature')
+      price.addLeaf('5000-10000')
+      price.addLeaf('10000-15000')
+      price.addLeaf('15000-20000')
+      feature.addLeaf('AC')
+      feature.addLeaf('Vibrating seats')
+      feature.addLeaf('Sunroof');
+
+      var color = trucks.addBranch('Color')
+      color.addLeaf('Black')
+      color.addLeaf('White')
+      color.addLeaf('Red')
+      color.addLeaf('Purple');
+      var tans = color.addBranch('Tans');
+      tans.addLeaf('Beige');
+      tans.addLeaf('Cream');
+
+      tree3.on('select', function(node,type){
+        console.log("tree3 select %s: %s", type, node.path);
+      });
+
 
     </script>
   </body>

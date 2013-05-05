@@ -10,7 +10,8 @@ module.exports = AccordionTree;
 
 defaults = {
   collapse:    true,
-  multiexpand: false
+  multiexpand: false,
+  branchexpand: true
 };
 
 function AccordionTree(el,options){
@@ -23,6 +24,7 @@ function AccordionTree(el,options){
   options = merge(defaults, options || {})
   this.selectBehavior   = (options.multiexpand ? null : 'collapseAll');
   this.reselectBehavior = (options.collapse ? 'collapse' : null);
+  this.branchExpand     = options.branchexpand;
 
   this.events = delegates(this.el, this);
   this.events.bind('click .leaf'  ,               'onClickLeaf');
@@ -62,6 +64,7 @@ AccordionTree.prototype.onClickBranch = function(e){
   var path = e.target.parentNode.getAttribute('data-path')
     , branch = this.nodes[path];
   if (branch) {
+    if (this.branchExpand) branch.expand();
     this.emit('selectBranch', branch);
     this.emit('select', branch, 'branch');
   }

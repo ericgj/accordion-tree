@@ -2,7 +2,7 @@
   "name": "accordion-tree",
   "repo": "ericgj/accordion-tree",
   "description": "Multi-level accordion view (aka tree view)",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "keywords": [],
   "dependencies": {
     "component/delegates": "*",
