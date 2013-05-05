@@ -9,6 +9,9 @@
 
   See `test/index.html` for example usage.
   
+  Please note that this component does not currently implement 
+  removal of tree nodes or changing of tree structure, etc.
+
 ## Installation
 
     $ component install ericgj/accordion-tree
@@ -28,8 +31,8 @@
 
   The following options are available:
 
-  - `deselect {Boolean}`    allows collapse of selected node (default true)
-  - `multiselect {Boolean}` allows expansion of more than one panel per tree 
+  - `collapse {Boolean}`    allows collapse of selected node (default true)
+  - `multiexpand {Boolean}` allows expansion of more than one panel per tree 
                             level (default false)
 
 ### AccordionTree#addBranch(content,slug)
@@ -51,15 +54,15 @@
 
   Add a leaf node with this node as the root.
 
-### Node#select
+### Node#expand
 
-  Programmatically expand this node (following deselect/multiselect behavior).
+  Programmatically expand this node (following collapse/multiexpand behavior).
 
-### Node#deselect
+### Node#collapse
 
   Programmatically collapse this node.
 
-### Node#deselectAll
+### Node#collapseAll
 
   Programmatically collapse this node and all its siblings.
 
