@@ -51,6 +51,9 @@
   display: block;
 }
 
+.accordion-tree .leaf {
+  padding-left: 10px;
+}
 
 .accordion-tree .caret {
   display: inline-block;
@@ -71,7 +74,7 @@
 
 /* down-arrow when node selected */
 
-.accordion-tree .selected > .caret {
+.accordion-tree .selected > * > .caret {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 5px solid black;

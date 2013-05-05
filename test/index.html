@@ -3,6 +3,7 @@
   <head>
     <title>Accordion Tree</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="./reset.css" />
     <link rel="stylesheet" href="../build/build.css" />
     <style>
       
@@ -12,25 +13,32 @@
         min-height: 1000px;
       }
 
+      h1,h2,h3 {
+        font-weight: bold;
+      }
+      
+      h1 {
+        font-size: 32px;
+        margin: 10px 0;
+      }
+     
+      h2 {
+        font-size: 24px;
+        margin: 10px 0;
+      }
+      
+      h3 {
+        font-size: 16px;
+        margin: 10px 0;
+      }
+      
       body > h2 {
-        border-top: 1px solid gray;
         margin-top: 30px;
       }
 
       .accordion-tree {
         width: 600px;
         margin-left: 20px;
-      }
-
-      .accordion-tree .branch {
-        font-weight: bold;
-        border-top: 1px solid gray;
-        padding: 5px 8px;
-      }
-
-      .accordion-tree .leaf {
-        font-weight: normal;
-        padding: 5px 8px;
       }
 
       .accordion-tree ul {
@@ -40,6 +48,18 @@
 
       .accordion-tree li {
         list-style-type: none;
+      }
+
+      .accordion-tree .branch {
+        font-weight: bold;
+        border-top: 1px solid gray;
+        padding-left: 8px;
+      }
+
+      .accordion-tree .leaf {
+        font-weight: normal;
+        padding-top: 5px;
+        padding-bottom: 5px;
       }
 
     </style>
@@ -55,7 +75,7 @@
     <div id="tree2">
     </div>
     
-<!--
+<!--  rarely if ever used
     <h2>Not deselectable, and single select (per tree level)</h2>
     <div id="tree3">
     </div>

@@ -25,9 +25,9 @@ function AccordionTree(el,options){
   this.reselectBehavior = (options.deselect ? 'deselect' : null);
 
   this.events = delegates(this.el, this);
-  this.events.bind('click .leaf'  ,           'onClickLeaf');
-  this.events.bind('click .branch > .caret' , 'onClickCaret');
-  this.events.bind('click .branch',           'onClickBranch');
+  this.events.bind('click .leaf'  ,               'onClickLeaf');
+  this.events.bind('click .branch > * > .caret' , 'onClickCaret');
+  this.events.bind('click .branch > *',           'onClickBranch');
   
   classes(this.el).add('accordion-tree');
   this.el.appendChild(domify('<ul class="children"></ul>')[0]);
@@ -59,7 +59,7 @@ AccordionTree.prototype.onClickLeaf = function(e){
 }
 
 AccordionTree.prototype.onClickBranch = function(e){
-  var path = e.target.getAttribute('data-path')
+  var path = e.target.parentNode.getAttribute('data-path')
     , branch = this.nodes[path];
   if (branch) {
     this.emit('selectBranch', branch);
@@ -68,7 +68,7 @@ AccordionTree.prototype.onClickBranch = function(e){
 }
 
 AccordionTree.prototype.onClickCaret = function(e){
-  var path = e.target.parentNode.getAttribute('data-path')
+  var path = e.target.parentNode.parentNode.getAttribute('data-path')
     , branch = this.nodes[path];
   branch.select();
 }
