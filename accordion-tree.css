@@ -52,11 +52,6 @@
 }
 
 
-/* left margin = width of caret */
-.accordion-tree .leaf {
-  margin-left: 10px;
-}
-
 .accordion-tree .caret {
   display: inline-block;
   vertical-align: top;

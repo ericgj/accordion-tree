@@ -51,11 +51,11 @@
     <div id="tree1">
     </div>
 
-<!--
     <h2>Deselectable, and multi select (per tree level)</h2>
     <div id="tree2">
     </div>
     
+<!--
     <h2>Not deselectable, and single select (per tree level)</h2>
     <div id="tree3">
     </div>
@@ -64,13 +64,12 @@
     <script src="../build/build.js"></script>
     <script>
       var Tree = require('accordion-tree');
+      
       var tree1 = Tree('#tree1');
+      
       var cars = tree1.addBranch('Cars')
         , trucks = tree1.addBranch('Trucks');
       
-      tree1.addLeaf('Orphan leaf');
-      cars.addLeaf('Orphan leaf');
-
       var price = cars.addBranch('By Price') 
         , feature = cars.addBranch('By Feature')
       price.addLeaf('5000-10000')
@@ -89,11 +88,37 @@
       tans.addLeaf('Beige');
       tans.addLeaf('Cream');
 
-      trucks.addLeaf('Orphan leaf');
-
       tree1.on('select', function(node,type){
-        console.log("Tree select %s: %s", type, node.path);
+        console.log("tree1 select %s: %s", type, node.path);
       });
+
+
+      var tree2 = Tree('#tree2', {multiselect: true});
+
+      var rep        = tree2.addBranch('Repertory')
+        , materia   = tree2.addBranch('Materia Medica');
+
+      var mind = rep.addBranch('Mind')
+        , head = rep.addBranch('Head')
+        , eyes = rep.addBranch('Ears');
+
+      var mm = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+      var br = {}
+      for (i=0;i<mm.length;++i) {
+        var x = mm[i];
+        br[x] = materia.addBranch(x);
+      }
+
+      cats = ['Awkward','Brain-Fag','Catalepsy','Clairvoyance','Comprehension','Consciousness','Cretinism']
+      for (i=0;i<cats.length;++i){
+        var cat = cats[i];
+        mind.addLeaf(cat);
+      }
+
+      tree2.on('select', function(node,type){
+        console.log("tree2 select %s: %s", type, node.path);
+      });
+      
 
     </script>
   </body>

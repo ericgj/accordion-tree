@@ -1,9 +1,12 @@
 
-build: components index.js accordion-tree.css template.js
+build: components index.js accordion-tree.css leaf.js branch.js
 	@component build --dev
 
-template.js: template.html
-	@component convert $<
+leaf.js: leaf.html
+	@minstache < $< > $@
+
+branch.js: branch.html
+	@minstache < $< > $@
 
 components: component.json
 	@component install --dev

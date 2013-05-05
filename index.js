@@ -30,7 +30,7 @@ function AccordionTree(el,options){
   this.events.bind('click .branch',           'onClickBranch');
   
   classes(this.el).add('accordion-tree');
-  this.el.appendChild(domify('<div class="children"></div>')[0]);
+  this.el.appendChild(domify('<ul class="children"></ul>')[0]);
 
   return this;
 }
