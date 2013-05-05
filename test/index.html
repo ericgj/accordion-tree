@@ -89,6 +89,11 @@
       tans.addLeaf('Cream');
 
       trucks.addLeaf('Orphan leaf');
+
+      tree.on('select', function(node,type){
+        console.log("Tree select %s: %s", type, node.path);
+      });
+
     </script>
   </body>
 </html>
