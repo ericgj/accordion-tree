@@ -1,5 +1,5 @@
 
-build: components index.js accordion-tree.css leaf.js branch.js
+build: components index.js builder.js accordion-tree.css leaf.js branch.js
 	@component build --dev
 
 leaf.js: leaf.html
@@ -12,6 +12,6 @@ components: component.json
 	@component install --dev
 
 clean:
-	rm -fr build components template.js
+	rm -fr build components 
 
 .PHONY: clean
