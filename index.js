@@ -4,7 +4,7 @@ var delegates = require('delegates')
   , classes   = require('classes')
   , leafTmpl  = require('./leaf.js')
   , branchTmpl= require('./branch.js')
-  , noop      = function(){}
+  , build     = require('./builder.js')
 
 module.exports = AccordionTree;
 
@@ -49,6 +49,10 @@ AccordionTree.prototype.addBranch = function(content,slug){
 
 AccordionTree.prototype.collapse = function(node){
   node.collapse();
+}
+
+AccordionTree.prototype.build = function(obj,root){
+  build(root || this.root, obj);
 }
 
 AccordionTree.prototype.onClickLeaf = function(e){

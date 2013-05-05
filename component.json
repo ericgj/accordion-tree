@@ -2,13 +2,15 @@
   "name": "accordion-tree",
   "repo": "ericgj/accordion-tree",
   "description": "Multi-level accordion view (aka tree view)",
-  "version": "0.0.4",
+  "version": "0.1.1",
   "keywords": [],
   "dependencies": {
     "component/delegates": "*",
     "component/emitter": "*",
     "component/domify": "*",
-    "component/classes": "*"
+    "component/classes": "*",
+    "component/object": "*",
+    "yields/isArray": "*"
   },
   "development": {
     "visionmedia/minstache": "*"  
@@ -16,6 +18,7 @@
   "license": "MIT",
   "scripts": [
     "index.js",
+    "builder.js",
     "leaf.js",
     "branch.js"
   ],

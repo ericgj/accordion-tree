@@ -117,27 +117,24 @@
       });
 
 
+      /* tests builder */ 
+
       var tree2 = Tree('#tree2', {multiexpand: true});
 
-      var rep        = tree2.addBranch('Repertory')
-        , materia   = tree2.addBranch('Materia Medica');
-
-      var mind = rep.addBranch('Mind')
-        , head = rep.addBranch('Head')
-        , eyes = rep.addBranch('Ears');
-
-      var mm = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-      var br = {}
-      for (i=0;i<mm.length;++i) {
-        var x = mm[i];
-        br[x] = materia.addBranch(x);
+      var data = {
+        'Repertory': {
+          'Mind': ['Awkward','Brain-Fag','Catalepsy','Clairvoyance','Comprehension','Consciousness','Cretinism'],
+          'Head': [],
+          'Eyes': []
+        },
+        'Materia Medica': {
+          'A': ['Abies-c', 'Abies-n', 'Abr', 'Abrot', 'Absin', 'Acal', 'Acet-ac', 'Acetan', 'Acon'],
+          'B': [],
+          'C': []
+        }
       }
 
-      cats = ['Awkward','Brain-Fag','Catalepsy','Clairvoyance','Comprehension','Consciousness','Cretinism']
-      for (i=0;i<cats.length;++i){
-        var cat = cats[i];
-        mind.addLeaf(cat);
-      }
+      tree2.build(data);
 
       tree2.on('select', function(node,type){
         console.log("tree2 select %s: %s", type, node.path);
