@@ -143,9 +143,12 @@ Node.prototype.siblingNodes = function(){
 // private
 
 
-// TODO
 var slugify = function(str){
-  return str;
+  str = str || '';
+  return String(str)
+    .toLowerCase()
+    .replace(/ +/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
 }
 
 var has = Object.prototype.hasOwnProperty;

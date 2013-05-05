@@ -47,16 +47,16 @@
   <body>
     <h1>Accordion Tree</h1>
     
-    <h2>Default behavior: deselectable, and single select</h2>
+    <h2>Default behavior: deselectable, and single select (per tree level)</h2>
     <div id="tree1">
     </div>
 
 <!--
-    <h2>Deselectable, and multi select</h2>
+    <h2>Deselectable, and multi select (per tree level)</h2>
     <div id="tree2">
     </div>
     
-    <h2>Not deselectable, and single select</h2>
+    <h2>Not deselectable, and single select (per tree level)</h2>
     <div id="tree3">
     </div>
 -->
@@ -64,10 +64,11 @@
     <script src="../build/build.js"></script>
     <script>
       var Tree = require('accordion-tree');
-      var tree = Tree('#tree1');
-      var cars = tree.addBranch('Cars')
-        , trucks = tree.addBranch('Trucks');
+      var tree1 = Tree('#tree1');
+      var cars = tree1.addBranch('Cars')
+        , trucks = tree1.addBranch('Trucks');
       
+      tree1.addLeaf('Orphan leaf');
       cars.addLeaf('Orphan leaf');
 
       var price = cars.addBranch('By Price') 
@@ -90,7 +91,7 @@
 
       trucks.addLeaf('Orphan leaf');
 
-      tree.on('select', function(node,type){
+      tree1.on('select', function(node,type){
         console.log("Tree select %s: %s", type, node.path);
       });
 
