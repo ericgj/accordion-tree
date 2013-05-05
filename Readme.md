@@ -45,6 +45,11 @@
   Add a leaf node with the given content, and (optional) identifying slug.
   Returns the new node.
 
+### AccordionTree#build(object,[node])
+
+  Build a tree from the given object, under the given node or the tree root
+  node by default.
+
 
 ### Node#addBranch(content,slug)
 
