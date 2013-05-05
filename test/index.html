@@ -67,11 +67,11 @@
   <body>
     <h1>Accordion Tree</h1>
     
-    <h2>Default behavior: deselectable, and single select (per tree level)</h2>
+    <h2>Collapsable, and single expand per tree level (default)</h2>
     <div id="tree1">
     </div>
 
-    <h2>Deselectable, and multi select (per tree level)</h2>
+    <h2>Collapsable, and multi expand per tree level</h2>
     <div id="tree2">
     </div>
     
@@ -113,7 +113,7 @@
       });
 
 
-      var tree2 = Tree('#tree2', {multiselect: true});
+      var tree2 = Tree('#tree2', {multiexpand: true});
 
       var rep        = tree2.addBranch('Repertory')
         , materia   = tree2.addBranch('Materia Medica');

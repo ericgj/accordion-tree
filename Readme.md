@@ -5,7 +5,7 @@
 
   Love it or hate it, it's here to stay... 
   
-  <img alt="Example" src="" />
+  <img alt="Example" src="http://i.imgur.com/dJ1mcOT.png" />
 
   See `test/index.html` for example usage.
   

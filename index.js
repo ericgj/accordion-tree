@@ -9,8 +9,8 @@ var delegates = require('delegates')
 module.exports = AccordionTree;
 
 defaults = {
-  deselect:    true,
-  multiselect: false
+  collapse:    true,
+  multiexpand: false
 };
 
 function AccordionTree(el,options){
@@ -21,8 +21,8 @@ function AccordionTree(el,options){
   this.nodes = [];
 
   options = merge(defaults, options || {})
-  this.selectBehavior   = (options.multiselect ? null : 'deselectAll');
-  this.reselectBehavior = (options.deselect ? 'deselect' : null);
+  this.selectBehavior   = (options.multiexpand ? null : 'collapseAll');
+  this.reselectBehavior = (options.collapse ? 'collapse' : null);
 
   this.events = delegates(this.el, this);
   this.events.bind('click .leaf'  ,               'onClickLeaf');
@@ -45,8 +45,8 @@ AccordionTree.prototype.addBranch = function(content,slug){
   return this.root.addBranch(content,slug);
 }
 
-AccordionTree.prototype.deselect = function(node){
-  node.deselect();
+AccordionTree.prototype.collapse = function(node){
+  node.collapse();
 }
 
 AccordionTree.prototype.onClickLeaf = function(e){
@@ -70,7 +70,7 @@ AccordionTree.prototype.onClickBranch = function(e){
 AccordionTree.prototype.onClickCaret = function(e){
   var path = e.target.parentNode.parentNode.getAttribute('data-path')
     , branch = this.nodes[path];
-  branch.select();
+  branch.expand();
 }
 
 
@@ -83,7 +83,7 @@ function Node(container,root,content,slug){
   this.path = this.fullPath();
   
   this.el = (root ? root.el : container.el);
-  this.selected = false;
+  this.expanded = false;
   this.children = [];
   return this;
 }
@@ -111,27 +111,27 @@ Node.prototype.addNode = function(tmpl,content,slug){
   return node;
 }
 
-Node.prototype.select = function(){
-  if (this.selected){
+Node.prototype.expand = function(){
+  if (this.expanded){
     var meth = this.container.reselectBehavior;
     if (meth) this[meth]();
   } else {
     var meth = this.container.selectBehavior;
     if (meth) this[meth]();
-    classes(this.el).add('selected');
-    this.selected = true;
+    classes(this.el).add('expanded');
+    this.expanded = true;
   }
 }
 
-Node.prototype.deselect = function(){
-  classes(this.el).remove('selected');
-  this.selected = false;
+Node.prototype.collapse = function(){
+  classes(this.el).remove('expanded');
+  this.expanded = false;
 }
 
-Node.prototype.deselectAll = function(){
+Node.prototype.collapseAll = function(){
   var nodes = this.siblingNodes();
   for (i=0;i<nodes.length;++i){
-    nodes[i].deselect();
+    nodes[i].collapse();
   }
 }
 

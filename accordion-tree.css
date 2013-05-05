@@ -37,17 +37,17 @@
 }
 
 
-/* display selected node and its children anywhere in the tree */
+/* display expanded node and its children anywhere in the tree */
 
-.accordion-tree .selected {
+.accordion-tree .expanded {
   display: block;
 }
 
-.accordion-tree .selected > .children > .branch {
+.accordion-tree .expanded > .children > .branch {
   display: block;
 }
 
-.accordion-tree .selected > .children > .leaf {
+.accordion-tree .expanded > .children > .leaf {
   display: block;
 }
 
@@ -72,9 +72,9 @@
 }
 
 
-/* down-arrow when node selected */
+/* down-arrow when node expanded */
 
-.accordion-tree .selected > * > .caret {
+.accordion-tree .expanded > * > .caret {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 5px solid black;
