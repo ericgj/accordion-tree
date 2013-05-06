@@ -29,6 +29,7 @@ function AccordionTree(el,options){
   this.events = delegates(this.el, this);
   this.events.bind('click .leaf'  ,               'onClickLeaf');
   this.events.bind('click .branch > * > .caret' , 'onClickCaret');
+  this.events.bind('click .branch > * > .icon' ,  'onClickCaret');
   this.events.bind('click .branch > *',           'onClickBranch');
   
   classes(this.el).add('accordion-tree');
