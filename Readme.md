@@ -31,13 +31,13 @@
 
   The following options are available:
 
-  - `collapse {Boolean}`    <br>    allows collapse of selected node (default true)
-  - `multiexpand {Boolean}` <br>    allows expansion of more than one panel per tree 
-                                      level (default false)
-  - `branchexpand` {Boolean}` <br>  clicking on branch label expands/collapses node, 
-                                      in addition to selecting (default true). When 
-                                      false, only clicking the caret/icon expands/
-                                      collapses node.
+  - `collapse {Boolean}`        allows collapse of selected node (default true)
+  - `multiexpand {Boolean}`     allows expansion of more than one panel per tree 
+                                  level (default false)
+  - `branchexpand {Boolean}`    clicking on branch label expands/collapses node, 
+                                  in addition to selecting (default true). When 
+                                  false, only clicking the caret/icon expands/
+                                  collapses node.
 
 ### AccordionTree#addBranch(content,slug)
 
