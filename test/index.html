@@ -79,6 +79,12 @@
     <div id="tree3">
     </div>
 
+    <h2>Node removal</h2>
+    <button class="remove-node">/trucks/color/tans/cream</button>
+    <button class="remove-node">/trucks/color/white</button>
+    <button class="remove-node">/trucks/color</button>
+    <button class="remove-node">/</button>
+
 <!--  rarely if ever used
     <h2>Not deselectable, and single select (per tree level)</h2>
     <div id="tree4">
@@ -168,6 +174,21 @@
         console.log("tree3 select %s: %s", type, node.path);
       });
 
+      
+      var removeNodeFunc = function(e){ 
+        var btn = e.target, path = btn.innerHTML;
+        console.log("tree3 remove %s", path);
+        if (path =="/"){
+          tree3.clear()
+        } else {
+          tree3.removeNode(tree3.nodes[path]);
+        }
+      }
+
+      var btns = document.querySelectorAll('.remove-node')
+      for (i=0;i<btns.length;++i){
+        btns[i].onclick = removeNodeFunc;
+      }
 
     </script>
   </body>

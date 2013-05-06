@@ -10,7 +10,7 @@
   See `test/index.html` for example usage.
   
   Please note that this component does not currently implement 
-  removal of tree nodes or changing of tree structure, etc.
+  re-ordering of tree structure, etc.
 
 ## Installation
 
@@ -51,8 +51,16 @@
 
 ### AccordionTree#build(object,[node])
 
-  Build a tree from the given object, under the given node or the tree root
-  node by default.
+  Build a tree from the given (json) object, under the given node or the tree root
+  node by default. Easy tree construction for simple cases.
+
+### AccordionTree#clear
+
+  Remove the contents of the entire tree.
+
+### AccordionTree#removeNode(node)
+
+  Remove the subtree under and including the specified node.
 
 
 ### Node#addBranch(content,slug)
@@ -63,6 +71,10 @@
 
   Add a leaf node with this node as the root.
 
+### Node#remove
+
+  Remove the subtree under and including this node.
+  
 ### Node#expand
 
   Programmatically expand this node (following collapse/multiexpand behavior).

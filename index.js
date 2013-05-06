@@ -2,6 +2,7 @@ var delegates = require('delegates')
   , Emitter   = require('emitter')
   , domify    = require('domify')
   , classes   = require('classes')
+  , indexof   = require('indexof')
   , leafTmpl  = require('./leaf.js')
   , branchTmpl= require('./branch.js')
   , build     = require('./builder.js')
@@ -18,8 +19,9 @@ function AccordionTree(el,options){
   if (!(this instanceof AccordionTree)) return new AccordionTree(el,options);
   if (typeof el=='string') el = document.querySelector(el);
   this.el = el;
+  this.nodes = {};
   this.root = new Node(this);
-  this.nodes = [];
+  this.nodes[this.root.path] = this.root;
 
   options = merge(defaults, options || {})
   this.selectBehavior   = (options.multiexpand ? null : 'collapseAll');
@@ -48,12 +50,25 @@ AccordionTree.prototype.addBranch = function(content,slug){
   return this.root.addBranch(content,slug);
 }
 
+AccordionTree.prototype.expand   = function(node){
+  node.expand();
+}
+
 AccordionTree.prototype.collapse = function(node){
   node.collapse();
 }
 
 AccordionTree.prototype.build = function(obj,root){
   build(root || this.root, obj);
+}
+
+AccordionTree.prototype.removeNode = function(root){
+  root && root.remove();
+}
+
+AccordionTree.prototype.clear =
+AccordionTree.prototype.remove = function(){
+  this.removeNode(this.root);
 }
 
 AccordionTree.prototype.onClickLeaf = function(e){
@@ -119,6 +134,24 @@ Node.prototype.addNode = function(tmpl,content,slug){
   return node;
 }
 
+// PITA!  
+/* Note that arrays are left with holes, should consider using a
+   set or list data structure instead
+*/
+Node.prototype.remove = function(){
+  for (var i=0;i<this.children.length;++i){
+    var child = this.children[i];
+    if (child) child.remove();
+  }
+  this.children = [];
+  if (this.root){
+    var parentEl = this.root.el.querySelector('.children');
+    if (parentEl) parentEl.removeChild(this.el);
+    delete this.root.children[indexof(this.root.children,this)];
+    delete this.container.nodes[this.path];
+  }
+}
+
 Node.prototype.expand = function(){
   if (this.expanded){
     var meth = this.container.reselectBehavior;
@@ -139,7 +172,7 @@ Node.prototype.collapse = function(){
 Node.prototype.collapseAll = function(){
   var nodes = this.siblingNodes();
   for (i=0;i<nodes.length;++i){
-    nodes[i].collapse();
+    nodes[i] && nodes[i].collapse();
   }
 }
 
