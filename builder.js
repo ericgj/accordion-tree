@@ -7,7 +7,7 @@ var build = function(root,obj){
       build( root.addBranch(k), obj[k]);
     }
   } else if (isArray(obj)) {
-    for (i=0;i<obj.length;++i) {
+    for (var i=0;i<obj.length;++i) {
       build( root, obj[i]);
     }
   } else {
